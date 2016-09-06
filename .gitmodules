@@ -1,0 +1,6 @@
+[submodule "umm_malloc"]
+	path = umm_malloc
+	url = ./umm_malloc/
+[submodule "spiffs"]
+	path = spiffs
+	url = ./spiffs/

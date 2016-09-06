@@ -2,10 +2,15 @@ OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
 OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 
-LINKER_SCRIPT=lua_gcc_nrf52.ld
-
 MK := mkdir
 RM := rm -rf
+
+#echo suspend
+ifeq ("$(VERBOSE)","1")
+NO_ECHO := 
+else
+NO_ECHO := @
+endif
 
 # Sorting removes duplicates
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
@@ -88,8 +93,8 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf52  --sectorerase
-	nrfjprog --reset
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf52 --sectorerase
+	nrfjprog --reset -f nrf52
 
 ## Flash softdevice
 flash_softdevice:

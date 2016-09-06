@@ -1,5 +1,7 @@
+.NOTPARALLEL:
+
 #fixme
-all: shell liblua.a libspiffs.a libnrf52.a
+all: liblua.a libspiffs.a libnrf52.a shell
 
 shell:
 	$(MAKE) -f mk/shell.mk

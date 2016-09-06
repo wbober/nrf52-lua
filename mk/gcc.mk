@@ -1,14 +1,10 @@
 BOARD ?= PCA10040
-
-#echo suspend
-ifeq ("$(VERBOSE)","1")
-NO_ECHO := 
-else
-NO_ECHO := @
-endif
+LINKER_SCRIPT = mk/gcc_nrf52.ld
+TEMPLATE_PATH = $(NRF5_SDK)/components/toolchain/gcc
 
 # Toolchain commands
 GNU_PREFIX=/home/wojtek/toolchains/gcc-arm-none-eabi-5_4-2016q2/bin/arm-none-eabi
+#GNU_PREFIX=arm-none-eabi
 
 # Toolchain commands
 CC              := $(GNU_PREFIX)-gcc
@@ -51,14 +47,13 @@ LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # let linker to dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
-LDFLAGS += --specs=nosys.specs -lc -lnosys
+LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += $(foreach id, $(PAN_IDS),-DNRF52_PAN_$(id))
 ASMFLAGS += -x assembler-with-cpp
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DSOFTDEVICE_PRESENT
-#ASMFLAGS += -DNRF_LOG_USES_UART=1
 ASMFLAGS += -DS132
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD

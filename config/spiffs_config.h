@@ -1,10 +1,3 @@
-/*
- * spiffs_config.h
- *
- *  Created on: Jul 3, 2013
- *      Author: petera
- */
-
 #ifndef SPIFFS_CONFIG_H_
 #define SPIFFS_CONFIG_H_
 
@@ -121,7 +114,7 @@ typedef unsigned char u8_t;
 // not on mount point. If not, SPIFFS_format must be called prior to mounting
 // again.
 #ifndef SPIFFS_USE_MAGIC
-#define SPIFFS_USE_MAGIC                (0)
+#define SPIFFS_USE_MAGIC                (1)
 #endif
 
 #if SPIFFS_USE_MAGIC
@@ -167,7 +160,7 @@ typedef unsigned char u8_t;
 #define SPIFFS_CFG_PHYS_ADDR(ignore)      (0x60000)
 #endif
 #ifndef SPIFFS_CFG_LOG_PAGE_SZ
-#define SPIFFS_CFG_LOG_PAGE_SZ(ignore)    (512)
+#define SPIFFS_CFG_LOG_PAGE_SZ(ignore)    (256)
 #endif
 #ifndef SPIFFS_CFG_LOG_BLOCK_SZ
 #define SPIFFS_CFG_LOG_BLOCK_SZ(ignore)   (4096)

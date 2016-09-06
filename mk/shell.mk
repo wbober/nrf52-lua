@@ -4,6 +4,7 @@ $(abspath shell/modules/lbsp.c) \
 $(abspath shell/modules/lble.c) \
 $(abspath shell/lua_shell.c) \
 $(abspath shell/lua_arch.c) \
+$(abspath shell/lua_fs.c) \
 $(abspath shell/main.c)
 
 INC_PATHS += -I$(abspath shell/modules)
@@ -35,7 +36,7 @@ INC_PATHS += -I$(abspath $(NRF5_SDK)/components/toolchain/CMSIS/Include)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/external/segger_rtt)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/examples/bsp)
 
-LIBS = _build/liblua.a _build/libspiffs.a _build/libnrf52.a
+LIBS = _build/liblua.a _build/libspiffs.a _build/libnrf52.a 
 OUTPUT_FILENAME=shell
 
 default: _build/shell.hex
