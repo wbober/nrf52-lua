@@ -89,7 +89,7 @@ void lua_arch_init(void)
 {
 	NRF_LOG_INIT();
 	umm_init();
-	NRF_LOG_PRINTF("lua_arch_init done\r\n");
+	NRF_LOG_DEBUG("lua_arch_init done\r\n");
 }
 
 void lua_arch_openlibs(struct lua_State *L)

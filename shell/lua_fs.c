@@ -122,7 +122,7 @@ static void flash_word_write(uint32_t * address, uint32_t value)
 
 static s32_t _read(u32_t addr, u32_t size, u8_t *dst)
 {
-//	NRF_LOG_PRINTF_DEBUG("_read %x %u %p\r\n", addr, size, dst);
+//	NRF_LOG_DEBUG("_read %x %u %p\r\n", addr, size, dst);
 	memcpy(dst, (void *)addr, size);
 	return 0;
 }
@@ -133,7 +133,7 @@ static s32_t _write(u32_t addr, u32_t size, u8_t *data)
 	uint32_t value;
 	uint32_t * aligned_addr;
 
-	NRF_LOG_PRINTF_DEBUG("_write: %x %u %p\r\n", addr, size, data);
+	NRF_LOG_DEBUG("_write: %x %u %p\r\n", addr, size, data);
 
 	// Check if start address is aligned. If not, then align the address.
 	if (!is_aligned(addr))
@@ -174,7 +174,7 @@ static s32_t _write(u32_t addr, u32_t size, u8_t *data)
 
 static s32_t _erase(u32_t addr, u32_t size)
 {
-	NRF_LOG_PRINTF_DEBUG("_erase: %x %u\r\n", addr, size);
+	NRF_LOG_DEBUG("_erase: %x %u\r\n", addr, size);
 	flash_page_erase((uint32_t *)addr);
     return 0;
 }
@@ -183,7 +183,7 @@ lua_FileHandle _f_open(const char *fname, const char *mode)
 {
 	spiffs_flags flags;
 
-	NRF_LOG_PRINTF_DEBUG("_f_open: %s %s\r\n", fname, mode);
+	NRF_LOG_DEBUG("_f_open: %s %s\r\n", fname, mode);
 
 	if (strcmp(mode, "r") == 0) {
 		flags = SPIFFS_O_RDONLY;
@@ -273,15 +273,15 @@ void lua_fs_init(void)
 	c.hal_write_f = _write;
 
 	ret = SPIFFS_mount(&fs, &c, spiffs_work_buf, spiffs_fds, sizeof(spiffs_fds), _cache, _cache_sz, NULL);
-	NRF_LOG_PRINTF("spiffs mount: %d\r\n", ret);
+	NRF_LOG_DEBUG("spiffs mount: %d\r\n", ret);
 
 	if (ret == SPIFFS_ERR_NOT_A_FS) {
 		SPIFFS_unmount(&fs);
 
 		ret = SPIFFS_format(&fs);
-		NRF_LOG_PRINTF("spiffs format: %d\r\n", ret);
+		NRF_LOG_DEBUG("spiffs format: %d\r\n", ret);
 
 		ret = SPIFFS_mount(&fs, &c, spiffs_work_buf, spiffs_fds, sizeof(spiffs_fds), _cache, _cache_sz, NULL);
-		NRF_LOG_PRINTF("spiffs mount: %d\r\n", ret);
+		NRF_LOG_DEBUG("spiffs mount: %d\r\n", ret);
 	}
 }

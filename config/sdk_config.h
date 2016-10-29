@@ -12,4 +12,8 @@
 #ifndef SDK_CONFIG_H__
 #define SDK_CONFIG_H__
 
+#define APP_TIMER_ENABLED 1
+#define APP_UART_ENABLED  1
+#define BUTTON_ENABLED    1
+
 #endif

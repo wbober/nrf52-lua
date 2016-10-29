@@ -1,10 +1,9 @@
 BOARD ?= PCA10040
 
 #assembly files common to all targets
-ASM_SOURCE_FILES = $(abspath $(NRF5_SDK)/components/toolchain/gcc/gcc_startup_nrf52.s)
+ASM_SOURCE_FILES = $(abspath $(NRF5_SDK)/components/toolchain/gcc/gcc_startup_nrf52.S)
 
 C_SOURCE_FILES += \
-$(abspath $(NRF5_SDK)/components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath $(NRF5_SDK)/components/drivers_nrf/uart/nrf_drv_uart.c) \
 $(abspath $(NRF5_SDK)/components/drivers_nrf/common/nrf_drv_common.c) \
 $(abspath $(NRF5_SDK)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
@@ -15,7 +14,8 @@ $(abspath $(NRF5_SDK)/components/libraries/util/app_error.c) \
 $(abspath $(NRF5_SDK)/components/libraries/util/app_error_weak.c) \
 $(abspath $(NRF5_SDK)/components/libraries/util/app_util_platform.c) \
 $(abspath $(NRF5_SDK)/components/libraries/util/nrf_assert.c) \
-$(abspath $(NRF5_SDK)/components/libraries/util/nrf_log.c) \
+$(abspath $(NRF5_SDK)/components/libraries/log/src/nrf_log_backend_serial.c) \
+$(abspath $(NRF5_SDK)/components/libraries/log/src/nrf_log_frontend.c) \
 $(abspath $(NRF5_SDK)/components/libraries/uart/retarget.c) \
 $(abspath $(NRF5_SDK)/components/libraries/uart/app_uart_fifo.c) \
 $(abspath $(NRF5_SDK)/components/toolchain/system_nrf52.c) \
@@ -42,6 +42,8 @@ INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/util)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/fifo)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/timer)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/button)
+INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/log)
+INC_PATHS += -I$(abspath $(NRF5_SDK)/components/libraries/log/src)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/drivers_nrf/uart)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/drivers_nrf/common)
@@ -54,7 +56,7 @@ INC_PATHS += -I$(abspath $(NRF5_SDK)/components/softdevice/common/softdevice_han
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/softdevice/s132/headers/nrf52)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/toolchain)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/components/toolchain/gcc)
-INC_PATHS += -I$(abspath $(NRF5_SDK)/components/toolchain/CMSIS/Include)
+INC_PATHS += -I$(abspath $(NRF5_SDK)/components/toolchain/cmsis/include)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/external/segger_rtt)
 INC_PATHS += -I$(abspath $(NRF5_SDK)/examples/bsp)
 

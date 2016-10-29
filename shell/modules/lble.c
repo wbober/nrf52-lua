@@ -11,7 +11,7 @@
 #include "lstring.h"
 #include "lundump.h"
 
-#include "nrf_drv_config.h"
+//#include "nrf_drv_config.h"
 
 #include "ble_advdata.h"
 #include "nordic_common.h"
@@ -41,39 +41,6 @@ static void sys_evt_dispatch(uint32_t evt_id)
     }
 }
 
-#if 0
-static void ble_stack_init(void)
-{
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(0,
-                                                    1,
-                                                    &ble_enable_params);
-    APP_ERROR_CHECK(err_code);
-
-    //Check the ram settings against the used number of links
-//    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
-
-    // Enable BLE stack.
-    err_code = softdevice_enable(&ble_enable_params);
-    APP_ERROR_CHECK(err_code);
-
-//    // Register with the SoftDevice handler module for BLE events.
-//    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-//    APP_ERROR_CHECK(err_code);
-
-    // Register with the SoftDevice handler module for System events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-}
-#endif
-
 static uint32_t ble_stack_init(void)
 {
     uint32_t err_code;
@@ -101,24 +68,9 @@ static uint32_t ble_stack_init(void)
     	return 0;
     }
 
-    NRF_LOG_PRINTF_DEBUG("SoftDevice enabled\r\n");
+    NRF_LOG_DEBUG("SoftDevice enabled\r\n");
 
     return 1;
-}
-
-static int ble_adv_init(struct lua_State *L)
-{
-	return 0;
-}
-
-static int ble_adv_start(struct lua_State *L)
-{
-	return 0;
-}
-
-static int ble_adv_stop(struct lua_State *L)
-{
-	return 0;
 }
 
 #define APP_ADV_DATA_LENGTH             0x15                              /**< Length of manufacturer specific data in the advertisement. */
@@ -133,6 +85,31 @@ static int ble_adv_stop(struct lua_State *L)
                                         0xcd, 0xde, 0xef, 0xf0            /**< Proprietary UUID for Beacon. */
 #define APP_CFG_NON_CONN_ADV_TIMEOUT    0                                 /**< Time for which the device must be advertising in non-connectable mode (in seconds). 0 disables timeout. */
 #define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(100, UNIT_0_625_MS) /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
+
+static int ble_adv_create(struct lua_State *L)
+{
+	return 0;
+}
+
+static int ble_adv_start(struct lua_State *L)
+{
+	return 0;
+}
+
+static int ble_adv_stop(struct lua_State *L)
+{
+	uint32_t err_code;
+	err_code = sd_ble_gap_adv_stop();
+
+	if (err_code != NRF_SUCCESS) {
+		luaL_error(L, "failed to stop advertising");
+	}
+
+	bsp_indication_set(BSP_INDICATE_IDLE);
+
+	lua_pushboolean(L, err_code == NRF_SUCCESS);
+	return 1;
+}
 
 // TODO: convert to object
 // Lua: create(uuid, major, minor)
@@ -200,33 +177,25 @@ static int ble_beacon_enable(struct lua_State *L)
 // TODO: convert to a method
 static int ble_beacon_disable(struct lua_State *L)
 {
-	uint32_t err_code;
-	err_code = sd_ble_gap_adv_stop();
-
-	if (err_code != NRF_SUCCESS) {
-		luaL_error(L, "failed to stop advertising");
-	}
-
-	bsp_indication_set(BSP_INDICATE_IDLE);
-
-	lua_pushboolean(L, err_code == NRF_SUCCESS);
-	return 1;
+	return ble_adv_stop(L);
 }
 
 const LUA_REG_TYPE ble_map[] =
 {
+  { LSTRKEY( "adv_create" ), LFUNCVAL(ble_adv_create) },
   { LSTRKEY( "adv_start" ), LFUNCVAL(ble_adv_start) },
   { LSTRKEY( "adv_stop" ), LFUNCVAL(ble_adv_stop) },
-  { LSTRKEY( "adv_init" ), LFUNCVAL(ble_adv_init) },
   { LSTRKEY( "beacon_create" ), LFUNCVAL(ble_beacon_create) },
   { LSTRKEY( "beacon_enable" ), LFUNCVAL(ble_beacon_enable) },
   { LSTRKEY( "beacon_disable" ), LFUNCVAL(ble_beacon_disable) },
+//  { LSTRKEY( "scan_start" ), LFUNCVAL(ble_beacon_disable) },
+//  { LSTRKEY( "scan_stop" ), LFUNCVAL(ble_beacon_disable) },
   { LNILKEY, LNILVAL }
 };
 
 LUALIB_API int luaopen_ble(lua_State *L)
 {
-	NRF_LOG_PRINTF_DEBUG("luaopen_ble\r\n");
+	NRF_LOG_DEBUG("luaopen_ble\r\n");
 
 	if (ble_stack_init()) {
 		bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
