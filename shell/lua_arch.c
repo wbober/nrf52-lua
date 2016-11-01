@@ -13,6 +13,7 @@
 #include "app_error.h"
 #include "nrf_delay.h"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 #include "nrf.h"
 
 void lua_fs_init(void);
@@ -87,7 +88,7 @@ int lua_arch_readline(struct lua_State *L, char *b, size_t len, const char *p)
 
 void lua_arch_init(void)
 {
-	NRF_LOG_INIT();
+	NRF_LOG_INIT(NULL);
 	umm_init();
 	NRF_LOG_DEBUG("lua_arch_init done\r\n");
 }

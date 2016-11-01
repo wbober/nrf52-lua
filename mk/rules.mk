@@ -98,6 +98,7 @@ flash: $(MAKECMDGOALS)
 
 ## Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_2.0.0_softdevice.hex
-	nrfjprog --program $(NRF5_SDK)/components/softdevice/s132/hex/s132_nrf52_2.0.0_softdevice.hex -f nrf52 --chiperase
+	@echo Flashing: s132_nrf52_3.0.0_softdevice.hex
+	nrfjprog --program $(NRF5_SDK)/components/softdevice/s132/hex/s132_nrf52_3.0.0_softdevice.hex -f nrf52 --chiperase 
 	nrfjprog --reset -f nrf52
+	
