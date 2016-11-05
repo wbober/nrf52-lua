@@ -12,6 +12,19 @@
 #include "lstring.h"
 #include "lundump.h"
 
+#include "nrf_soc.h"
+
+static int node_temp(lua_State *L)
+{
+	lua_Number result;
+	int32_t temp = 25;
+	sd_temp_get(&temp);
+	result = temp/4;
+	lua_pushinteger(L, result);
+	return 1;
+}
+
+#if 0
 static int node_restart(lua_State* L)
 {
 	return 0;
@@ -37,16 +50,13 @@ static int node_chipid(lua_State* L)
 }
 
 // Lua: heap()
-#if 0
 static int node_heap(lua_State* L)
 {
 	uint32_t sz = 0;
 	lua_pushinteger(L, sz);
 	return 1;
 }
-#endif
 
-#if 0
 static lua_State *gL = NULL;
 
 extern lua_Load gLoad;
@@ -198,17 +208,18 @@ static int node_compile( lua_State* L )
 
 const LUA_REG_TYPE node_map[] =
 {
+  { LSTRKEY( "temp" ), LFUNCVAL( node_temp ) },
+#if 0
   { LSTRKEY( "chipid" ), LFUNCVAL( node_chipid ) },
   { LSTRKEY( "restart" ), LFUNCVAL( node_restart ) },
   { LSTRKEY( "sleep" ), LFUNCVAL( node_sleep ) },
   { LSTRKEY( "dsleep" ), LFUNCVAL( node_deep_sleep ) },
-#if 0
   { LSTRKEY( "power_down" ), LFUNCVAL( node_power_down ) },
   { LSTRKEY( "heap" ), LFUNCVAL( node_heap ) },
   { LSTRKEY( "input" ), LFUNCVAL( node_input ) },
   { LSTRKEY( "output" ), LFUNCVAL( node_output ) },
   { LSTRKEY( "compile" ), LFUNCVAL( node_compile) },
-// { LSTRKEY( "dsleepsetoption" ), LFUNCVAL( node_deepsleep_setoption) },
+  { LSTRKEY( "dsleepsetoption" ), LFUNCVAL( node_deepsleep_setoption) },
 #endif
   { LNILKEY, LNILVAL }
 };
