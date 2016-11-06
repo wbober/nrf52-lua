@@ -102,10 +102,11 @@ void lua_arch_openlibs(struct lua_State *L)
 #ifdef LUA_FS_SUPPORT
 	lua_fs_init();
 #endif
+
+	luaL_requiref(L, "node", luaopen_node, 1);
 #if 0
 	luaL_requiref(L, "tmr", luaopen_tmr, 1);
 	luaL_requiref(L, "file", luaopen_file, 1);
-	luaL_requiref(L, "node", luaopen_node, 1);
 	luaL_requiref(L, "gpio", luaopen_gpio, 1);
 	luaL_requiref(L, "adc", luaopen_adc, 1);
 	luaL_requiref(L, "pwm", luaopen_pwm, 1);

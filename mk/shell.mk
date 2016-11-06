@@ -2,6 +2,7 @@ C_SOURCE_FILES += \
 $(abspath umm_malloc/umm_malloc.c) \
 $(abspath shell/modules/lbsp.c) \
 $(abspath shell/modules/lble.c) \
+$(abspath shell/modules/node.c) \
 $(abspath shell/lua_shell.c) \
 $(abspath shell/lua_arch.c) \
 $(abspath shell/lua_fs.c) \

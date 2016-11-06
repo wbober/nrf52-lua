@@ -17,10 +17,10 @@
 static int node_temp(lua_State *L)
 {
 	lua_Number result;
-	int32_t temp = 25;
+	int32_t temp;
 	sd_temp_get(&temp);
-	result = temp/4;
-	lua_pushinteger(L, result);
+	result = (float)temp/4;
+	lua_pushnumber(L, result);
 	return 1;
 }
 
