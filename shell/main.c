@@ -3,16 +3,20 @@
 #include <stdio.h>
 #include "app_uart.h"
 #include "app_error.h"
+#include "app_timer.h"
+
 #include "nrf_delay.h"
 #include "nrf.h"
 #include "bsp.h"
 
-extern void lua_shell_loop(void *data);
-extern void lua_arch_init(void);
-
+#define APP_TIMER_PRESCALER             0                                 /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE         4                                 /**< Size of timer operation queues. */
 #define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
 #define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                           /**< UART RX buffer size. */
+
+extern void lua_shell_loop(void *data);
+extern void lua_arch_init(void);
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -50,13 +54,6 @@ static uint32_t uart_init(void)
     return err_code;
 }
 
-#include "app_timer.h"
-#define APP_TIMER_PRESCALER             0                                 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE         4                                 /**< Size of timer operation queues. */
-
-/**
- * @brief Function for main application entry.
- */
 int main(void)
 {
     LEDS_CONFIGURE(LEDS_MASK);
@@ -72,6 +69,3 @@ int main(void)
     	lua_shell_loop(NULL);
     }
 }
-
-
-/** @} */

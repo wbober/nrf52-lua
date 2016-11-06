@@ -1,35 +1,34 @@
-// Auxiliary Lua modules. All of them are declared here, then each platform
-// decides what module(s) to register in the src/platform/xxxxx/platform_conf.h file
-// FIXME: no longer platform_conf.h - either CPU header file, or board file
-
 #ifndef __AUXMODS_H__
 #define __AUXMODS_H__
 
 #include "lua.h"
 
-#define AUXLIB_GPIO     "gpio"
-LUALIB_API int ( luaopen_gpio )( lua_State *L );
+LUALIB_API int luaopen_file(lua_State *L);
+LUALIB_API int luaopen_bsp(lua_State *L);
+LUALIB_API int luaopen_ble(lua_State *L);
+LUALIB_API int luaopen_node(lua_State *L);
+
+//#define AUXLIB_GPIO     "gpio"
+//LUALIB_API int ( luaopen_gpio )( lua_State *L );
 
 //#define AUXLIB_SPI      "spi"
 //LUALIB_API int ( luaopen_spi )( lua_State *L );
 //
-#define AUXLIB_TMR      "tmr"
-LUALIB_API int ( luaopen_tmr )( lua_State *L );
+//#define AUXLIB_TMR      "tmr"
+//LUALIB_API int ( luaopen_tmr )( lua_State *L );
 
 //#define AUXLIB_PD       "pd"
 //LUALIB_API int ( luaopen_pd )( lua_State *L );
 
-#define AUXLIB_UART     "uart"
-LUALIB_API int ( luaopen_uart )( lua_State *L );
+//#define AUXLIB_UART     "uart"
+//LUALIB_API int ( luaopen_uart )( lua_State *L );
 
 //#define AUXLIB_TERM     "term"
 //LUALIB_API int ( luaopen_term )( lua_State *L );
 
-#define AUXLIB_PWM      "pwm"
-LUALIB_API int ( luaopen_pwm )( lua_State *L );
+//#define AUXLIB_PWM      "pwm"
+//LUALIB_API int ( luaopen_pwm )( lua_State *L );
 
-LUALIB_API int luaopen_bsp(lua_State *L);
-LUALIB_API int luaopen_ble(lua_State *L);
 //
 //#define AUXLIB_PACK     "pack"
 //LUALIB_API int ( luaopen_pack )( lua_State *L );
@@ -43,8 +42,8 @@ LUALIB_API int luaopen_ble(lua_State *L);
 //#define AUXLIB_CPU      "cpu"
 //LUALIB_API int ( luaopen_cpu )( lua_State* L );
 
-#define AUXLIB_ADC      "adc"
-LUALIB_API int ( luaopen_adc )( lua_State *L );
+//#define AUXLIB_ADC      "adc"
+//LUALIB_API int ( luaopen_adc )( lua_State *L );
 //
 //#define AUXLIB_RPC      "rpc"
 //LUALIB_API int ( luaopen_rpc )( lua_State *L );
@@ -63,8 +62,6 @@ LUALIB_API int ( luaopen_adc )( lua_State *L );
 //
 //#define AUXLIB_U8G      "u8g"
 //LUALIB_API int ( luaopen_u8g )( lua_State *L );
-
-LUALIB_API int (luaopen_node)(lua_State *L);
 
 //#define AUXLIB_OW       "ow"
 //LUALIB_API int ( luaopen_ow )( lua_State *L );

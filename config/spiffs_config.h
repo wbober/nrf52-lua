@@ -249,4 +249,10 @@ typedef u16_t spiffs_obj_id;
 // i.e. (spiffs_file_system_size / log_page_size) - 1
 typedef u16_t spiffs_span_ix;
 
+// Forward declaractions of architecture dependent callbacks. These
+// were added for nrf52-lua and aren't normaly present in spiffs_config.h
+extern s32_t spiffs_arch_read(u32_t addr, u32_t size, u8_t *dst);
+extern s32_t spiffs_arch_write(u32_t addr, u32_t size, u8_t *data);
+extern s32_t spiffs_arch_erase(u32_t addr, u32_t size);
+
 #endif /* SPIFFS_CONFIG_H_ */

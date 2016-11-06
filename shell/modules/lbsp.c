@@ -1,17 +1,8 @@
 #include <stddef.h>
 #include "boards.h"
-
 #include "lrodefs.h"
 #include "lua.h"
 #include "lauxlib.h"
-
-#include "ldo.h"
-#include "lfunc.h"
-#include "lmem.h"
-#include "lobject.h"
-#include "lopcodes.h"
-#include "lstring.h"
-#include "lundump.h"
 
 #define LED_NO_TO_PIN(id) ((1 << (LED_START + (id - 1))))
 

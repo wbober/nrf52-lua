@@ -69,6 +69,8 @@ int _f_eof(lua_FileHandle file);
 #define lua_unlock(L)    ((void) 0)
 
 struct lua_State;
+
+extern struct lua_State * lua_getstate(void);
 extern int lua_arch_readline(struct lua_State *L, char *b, size_t len, const char *p);
 extern int lua_arch_write(const char *s, size_t len);
 extern void *lua_arch_alloc(void *ud, void *ptr, size_t osize, size_t nsize);

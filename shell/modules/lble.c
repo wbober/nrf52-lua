@@ -11,8 +11,6 @@
 #include "lstring.h"
 #include "lundump.h"
 
-//#include "nrf_drv_config.h"
-
 #include "ble_advdata.h"
 #include "nordic_common.h"
 #include "softdevice_handler.h"
@@ -24,20 +22,16 @@
 #define PERIPHERAL_LINK_COUNT           0
 #define APP_TIMER_PRESCALER             0
 
-#ifdef LUA_FS_SUPPORT
 extern volatile bool flash_op_done;
-#endif
 
 static void sys_evt_dispatch(uint32_t evt_id)
 {
     switch (evt_id)
     {
-#ifdef LUA_FS_SUPPORT
         case NRF_EVT_FLASH_OPERATION_SUCCESS:
         case NRF_EVT_FLASH_OPERATION_ERROR:
         	flash_op_done = true;
             break;
-#endif
     }
 }
 

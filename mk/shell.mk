@@ -3,12 +3,17 @@ $(abspath umm_malloc/umm_malloc.c) \
 $(abspath shell/modules/lbsp.c) \
 $(abspath shell/modules/lble.c) \
 $(abspath shell/modules/node.c) \
+$(abspath shell/modules/file.c) \
+$(abspath shell/vfs/vfs.c) \
+$(abspath shell/vfs/vfs_spiffs.c) \
 $(abspath shell/lua_shell.c) \
 $(abspath shell/lua_arch.c) \
-$(abspath shell/lua_fs.c) \
+$(abspath shell/spiffs_arch.c) \
 $(abspath shell/main.c)
 
 INC_PATHS += -I$(abspath shell/modules)
+INC_PATHS += -I$(abspath shell/compat)
+INC_PATHS += -I$(abspath shell/vfs)
 INC_PATHS += -I$(abspath lua)
 INC_PATHS += -I$(abspath spiffs/src)
 INC_PATHS += -I$(abspath umm_malloc)

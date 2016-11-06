@@ -4,14 +4,6 @@
 #include "lua.h"
 #include "lauxlib.h"
 
-#include "ldo.h"
-#include "lfunc.h"
-#include "lmem.h"
-#include "lobject.h"
-#include "lopcodes.h"
-#include "lstring.h"
-#include "lundump.h"
-
 #include "nrf_soc.h"
 
 static int node_temp(lua_State *L)

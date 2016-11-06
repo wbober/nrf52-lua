@@ -19,6 +19,7 @@
 
 static const char *progname = "lua";
 
+
 /*
  ** Prints an error message, adding the program name in front of it
  ** (if present)
@@ -216,16 +217,24 @@ static void print_version(void)
 	lua_writeline();
 }
 
+lua_State* lua_getstate(void)
+{
+	static lua_State *L = NULL;
+	if (!L) {
+		L = lua_newstate(lua_arch_alloc, NULL); /* create state */
+	}
+	return L;
+}
+
 void lua_shell_loop(void *data)
 {
-	lua_State *L = lua_newstate(lua_arch_alloc, NULL); /* create state */
+	lua_State *L = lua_getstate();
 	luaL_openlibs(L); /* open standard libraries */
-	lua_arch_openlibs(L);
+	lua_arch_openlibs(L); /* open platform libraries */
 
-#if 0
-	debug("Executing init.lua");
-	luaL_dofile(L, "init.lua");
-#endif
+//XXX: porting
+//	debug("Executing init.lua");
+//	luaL_dofile(L, "init.lua");
 
 	print_version();
 
