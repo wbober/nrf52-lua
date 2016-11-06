@@ -49,7 +49,7 @@ LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # let linker to dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
-LDFLAGS += --specs=nano.specs -lc -lnosys
+LDFLAGS += --specs=nano.specs -u _printf_float -lc -lnosys 
 
 # Assembler flags
 ASMFLAGS += $(foreach id, $(PAN_IDS),-DNRF52_PAN_$(id))
